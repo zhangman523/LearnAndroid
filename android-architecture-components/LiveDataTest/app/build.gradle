@@ -1,0 +1,50 @@
+apply plugin: 'com.android.application'
+
+android {
+  compileSdkVersion 26
+  buildToolsVersion "26.0.1"
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+  defaultConfig {
+    applicationId "zm.com.livedatatest"
+    minSdkVersion 14
+    targetSdkVersion 26
+    versionCode 1
+    versionName "1.0"
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    jackOptions {
+      enabled true
+    }
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+}
+
+dependencies {
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+  androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    exclude group: 'com.android.support', module: 'support-annotations'
+  })
+  compile "com.android.support:appcompat-v7:$support_version"
+  compile 'com.android.support.constraint:constraint-layout:1.0.2'
+  testCompile 'junit:junit:4.12'
+
+  compile "android.arch.persistence.room:runtime:$arch_version"
+  compile "android.arch.lifecycle:runtime:$arch_version"
+  compile "android.arch.lifecycle:extensions:$arch_version"
+  annotationProcessor "android.arch.persistence.room:compiler:$arch_version"
+  annotationProcessor "android.arch.lifecycle:compiler:$arch_version"
+  testCompile ("android.arch.core:core-testing:$arch_version", {
+    exclude group: 'com.android.support', module: 'support-compat'
+    exclude group: 'com.android.support', module: 'support-annotations'
+    exclude group: 'com.android.support', module: 'support-core-utils'
+  })
+  androidTestCompile("android.arch.core:core-testing:$arch_version", {
+  })
+}
