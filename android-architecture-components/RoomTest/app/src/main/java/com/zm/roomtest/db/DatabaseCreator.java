@@ -22,6 +22,8 @@ public class DatabaseCreator {
 
   private UsersDatabase mDatabase;
 
+  private BankDatabase mBankDatabase;
+
   private final AtomicBoolean mInitializing = new AtomicBoolean(true);
 
   private static final Object LOCK = new Object();
@@ -66,8 +68,10 @@ public class DatabaseCreator {
             Room.databaseBuilder(context.getApplicationContext(), UsersDatabase.class,
                 DATABASE_NAME).build();
 
-        // Add a delay to simulate a long-running operation
-        addDelay();
+        BankDatabase bankDatabase =
+            Room.databaseBuilder(context.getApplicationContext(), BankDatabase.class,
+                BankDatabase.DATABASE_NAME).build();
+        mBankDatabase = bankDatabase;
 
         mDatabase = db;
         Log.d("DatabaseCreator", "Create DB Success!");
@@ -86,5 +90,9 @@ public class DatabaseCreator {
       Thread.sleep(4000);
     } catch (InterruptedException ignored) {
     }
+  }
+
+  public BankDatabase getBankDatabase() {
+    return mBankDatabase;
   }
 }
